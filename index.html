@@ -381,6 +381,7 @@ function geetjsonrute(){
   }
 }
 function doGenerateRoute(t){
+  $('#detaildialog').html('');
   //console.log(t.properties.legs);
   let b=locStorr(),c=sesStorr();
   let ee=JSON.parse(b.listrute); //JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.78,'heightfront':1.63});
