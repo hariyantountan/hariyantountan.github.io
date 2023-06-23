@@ -1,0 +1,535 @@
+<html>
+  <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Dinas Lingkungan Hidup Kabupaten Sintang SISTEM INFORMASI POTENSI DAN ANCAMAN KARHUTLA (SIPAKAR)" />
+        <meta name="author" content="Dinas Lingkungan Hidup Kabupaten Sintang" />
+        <title>KAJIAN PENGGUNAAN ENERGI KENDARAAN LISTRIK RODA DUA BERDASARKAN RUTE PERJALANAN SEPEDA MOTOR PADA PETA DIGITAL</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link href="css/styles.css" rel="stylesheet" />
+
+        <!-- Admin LTE style -->
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="css/custom.css">
+        <link href="css/maptalks.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+        <style type="text/css">
+            #mapshow { position: fixed; height: 100%; width:100%; z-index: 10; left: 0px; top:0px;}
+            #maskproses { position: fixed; height: 100%; width:100%;background: #fff; z-index: 20; left: 0px; top:0px;display: block;}
+        </style>
+  </head>
+
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-light bg-light">
+            &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fa fa-bars"></i></button>
+            <p class="navbar-brand ps-3" href="#"><img src="logountan.png" width="40px" height="40px" style="opacity: .9;display: block;"></p>
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal-welcome">
+                      <i class="fa fa-info-circle mr-2"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-footer bg-primary text-light">
+                        <div class="small mt-2"><h6>Penggunaan Energi Sepeda Motor<br /></h6></div>
+                    </div>
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                          <div class="col-sm-12 mt-3">
+                            <div class="card">
+                              <div class="card-header ui-sortable-handle">
+                                <h3 class="card-title">
+                                  <i class="fa fa-map mr-1"></i>
+                                  Rute
+                                </h3>
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body sidebar pb-3 pt-2">
+                                  <label>Moda Citra Digital</label>
+                                  <label> </label>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                  <button type="button" class="btn btn-secondary" onclick="cTileLayerShow('osm');">OSM</button>
+                                  <button type="button" class="btn btn-secondary" onclick="cTileLayerShow('satelite');">Satelit</button>
+                                </div>
+                                <div class="row" id="showlegenda" style="overflow-x: hidden;">
+                                </div>
+                              </div>
+                              <div class="card-body sidebar pb-3 pt-2">
+                                  <div class="btn-group btn-block mt-2 mb-1">
+                                      <button type="button" class="btn btn-primary" onclick="geetjsonrute();">Tampilkan Rute</button>
+                                  </div>
+                              </div>
+                              <div class="card-body sidebar pb-3 pt-2" id="filterdialog">
+                              </div>
+                              <div class="card-body sidebar pb-3 pt-2">
+                                  <div class="btn-group">
+                                    <label for="satfilter" class="btn-flat">Tambah Rute </label>
+                                    <button class="btn btn-sm btn-flat" id="togsat" style="margin-top: -5px;"><i class="fa fa-plus-circle"></i></button>
+                                  </div>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+                          </div>
+                          <div class="col-sm-12 pb-3">
+                            <div class="card">
+                              <div class="card-header">
+                                <h3 class="card-title"><i class="fa fa-map-pin mr-1"></i>
+                                Detail</h3>
+                              </div>
+                              <div class="card-body sidebar pb-3 pt-2" id="detaildialog">
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small ml-2 mr-1">Copyright &copy; 2023 </div>
+                        <div class="ml-2 mr-1 d-flex align-items-center justify-content-between small">Universitas Tanjungpura</div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <div id="maskproses">
+                            <div class="overlay-wrapper">
+                                <div class="overlay">
+                                  <i class="fa fa-sync-alt fa-spin"></i>
+                                  Loading...
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mapshow"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+
+<div class="modal fade" id="modal-welcome">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="logintitle">Selamat Datang</h4>
+<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body" id="loginbody">
+  <div class="card">
+    <div class="card-header text-center">
+      <a href="#" class="h4"><b>KAJIAN PENGGUNAAN ENERGI KENDARAAN LISTRIK RODA DUA BERDASARKAN RUTE PERJALANAN SEPEDA MOTOR PADA PETA DIGITAL</b></a><br />
+      <a href="#" class="h4">Fakultas Teknik</a>
+    </div>
+    <div class="card-header text-center">
+    </div>
+    <div class="card-body">
+    <div class="card-header text-center">
+    </div>
+      <p class="login-box-msg">Aplikasi untuk menampilkan rute perjalanan dan energi yang digunakan</p>
+
+      
+
+      <div class="social-auth-links text-center mt-2 mb-3">
+        
+      </div>
+      <!-- /.social-auth-links -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="js/jquery.ba-throttle-debounce.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/used.js"></script>
+<script src="js/maptalks.min.js"></script>
+<script src="js/jszip.min.js"></script>
+<script src="js/jszip-utils.min.js"></script>
+<script src="js/togeojson.js"></script>
+<script src="js/togglesidbar.js"></script>
+
+    <script type="text/javascript">
+function showLoading(){
+$('#maskproses').attr({'style':'position: fixed; height: 100%; width:100%;background: #fff; z-index: 20; left: 0px; top:0px;display: block;'});
+}
+function showTampilData(){
+$('#maskproses').attr({'style':'position: fixed; height: 100%; width:100%;background: #fff; z-index: -20; left: 0px; top:0px;display: block;'});
+}
+
+
+var globarr = [],initlat = -0.031090099094313928,initlong = 109.3442369665205,initzoom = 12.8,
+thetade= new Date(),
+vyear = thetade.getFullYear(),vmonth=thetade.getMonth() + 1,vdate=thetade.getDate(),
+mapshow = new maptalks.Map('mapshow', {
+center: [initlong,initlat],
+zoom: initzoom
+}).on('click', function(a){
+mapShowOnClick(a);
+})
+layerMarkerShow = new maptalks.VectorLayer('layermarkershow').addTo(mapshow),
+layerMarkerClick = new maptalks.VectorLayer('layermarkerclick').addTo(mapshow),
+layerKetDistance = new maptalks.VectorLayer('layerKetDistance').addTo(mapshow),
+mapShowClickMarker = new maptalks.Marker().addTo(mapshow.getLayer('layermarkerclick'));
+mapOnlyRoute = new maptalks.MultiLineString().addTo(mapshow.getLayer('layermarkershow'));
+mapOnlyRoute.updateSymbol({
+    'lineColor' : '#ff4e21',
+    'lineWidth' : 7,
+    'lineJoin' : 'miter',
+    'lineCap':'round',
+    'lineDasharray' : [7,10],
+});
+
+
+globarr['osm'] = new maptalks.TileLayer('osm', {
+urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',maxZoom: 19,
+attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+globarr['satelite'] = new maptalks.TileLayer('satelite', {
+urlTemplate: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',maxZoom: 19,
+attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+cTileLayerShow('osm');
+function cTileLayerShow(b){
+if(!$.isEmptyObject(globarr[b])){
+mapshow.setBaseLayer(globarr[b]);
+}
+}
+/*var requestOptions = {
+method: 'GET',
+};
+
+fetch("https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=drive&apiKey=2dbf6708e9484c559e44dfdde6978423", requestOptions)
+.then(response => response.json())
+.then(result => console.log(result))
+.catch(error => console.log('error', error));
+
+https://api.geoapify.com/v2/place-details?lat=-0.025489697584205828&lon=109.33909390600826&apiKey=YOUR_API_KEY
+
+
+*/
+
+
+window.addEventListener('DOMContentLoaded', event => {
+  showLoading();
+  if(checkCompat()){
+  let b=locStorr(),c=sesStorr();
+  try {
+
+  clearRuteExist();
+  //geetjsonrute();
+
+  }
+  catch(err) {
+  $('body').html('Terjadi Kesalahan');
+  }
+  }else{
+  $('body').html('Browser anda tidak mendukung aplikasi');
+  }
+
+});
+function toCenterLoc(){
+  urlLoader('GET','https://api.geoapify.com/v1/ipinfo?&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
+  then(function(t){
+    console.log(t.location.latitude) // latitude longitude
+    if (typeof(t.location) !== "undefined") {
+      mapshow.setCenter([parseFloat(t.location.longitude),parseFloat(t.location.latitude)]);
+    }
+  })
+}
+function clearRuteExist(){
+  let b=locStorr(),c=sesStorr();
+  let r=[{"lat":'',"long":''},{"lat":'',"long":''}],s = JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.78,'heightfront':1.63});
+    localStorage.setItem('listrute',s);
+  genListRuteField();
+  showTampilData();
+}
+
+function genListRuteField(){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute);
+  console.log(ee);
+    for (let i = ee.rute.length - 1; i >= 0; i--) {
+
+globarr['marker'+i] = new maptalks.Marker()
+.addTo(mapshow.getLayer('layermarkershow'));
+
+
+      let aa=$('<label />').attr({'id':'lokasitext'+i}).html(' '),ab=$('<div />').attr({'class':'input-group date'}),ac=$('<div />').attr({'class':'input-group-prepend'}),ad=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-arrow-up"></i>'),
+      ae=$('<div />').attr({'class':'input-group-prepend'}),af=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-arrow-down"></i>'),
+      ag=$('<input />').attr({'id':'titik'+i,'type':'text','class':'form-control form-control-sm','value':ee.rute[i].lat.toString()+','+ee.rute[i].long.toString()}),
+      ah=$('<div />').attr({'class':'input-group-append'}),ai=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-minus-circle"></i>'),aj=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-eraser"></i>').on('click',function(){clearFieldRute(i)});
+      ab.append([ac,ad,ae,af,ag,ah,aj,ai]);
+    $('#filterdialog').prepend(ab,aa);
+
+    }
+}
+function clearFieldRute(a){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute);
+  $('#lokasitext'+a).html(' ');
+  $('#titik'+a).attr({'value':"','"});
+
+  ee.rute[a].lat='';
+  ee.rute[a].long='';
+  let ns = JSON.stringify(ee);
+  localStorage.setItem('listrute',ns);
+  globarr['marker'+a].hide();
+}
+function mapShowOnClick(a){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute);
+
+  for (let i = 0; i <= ee.rute.length - 1; i++) {
+    //console.log(ee.rute[i].lat,ee.rute[i].long);
+    if(ee.rute[i].lat==''||ee.rute[i].long==''){
+      mapshow.identify(
+      {
+      'coordinate' : a.coordinate,
+      'layers' : ['layermarkershow']
+      },
+      function (geos) {
+      if (geos.length === 0) {
+      doMapShowClick(a,i);
+      }
+      }
+      );
+      ee.rute[i].lat=a.coordinate.y;
+      ee.rute[i].long=a.coordinate.x;
+      let ns = JSON.stringify(ee);
+      localStorage.setItem('listrute',ns);
+      break;
+    }
+  }
+  //console.log(a.coordinate);
+}
+function doMapShowClick(a,i){
+  globarr['marker'+i].updateSymbol({
+  'markerFile' : 'imerah.png',
+  'markerWidth' : 45,
+  'markerHeight' : 45,
+  'markerDy':10
+  })
+  globarr['marker'+i].setCoordinates([a.coordinate.x,a.coordinate.y]);
+  globarr['marker'+i].show();
+  //console.log('x loc'+a.coordinate.x)
+
+  $('#titik'+i).attr({'value':a.coordinate.x+','+a.coordinate.y});
+  urlLoader('GET','https://api.geoapify.com/v1/geocode/reverse?lat='+a.coordinate.y+'&lon='+a.coordinate.x+'&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
+  then(function(t){
+    //console.log(t.features[0].properties.datasource.formatted)
+    //console.log(t.features[0].properties.formatted)
+    $('#lokasitext'+i).html(t.features[0].properties.formatted);
+  })
+  /*let aa=$('<label />').attr({'id':'lokasitext'+i}).html(' '),ab=$('<div />').attr({'class':'input-group date'}),ac=$('<div />').attr({'class':'input-group-prepend'}),ad=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-arrow-up"></i>'),
+      ae=$('<div />').attr({'class':'input-group-prepend'}),af=$('<div />').attr({'class':'input-group-text'}).html('<i class="fa fa-arrow-down"></i>'),
+      ag=$('<input />').attr({'id':'titik'+i,'type':'text','class':'form-control 
+      https://api.geoapify.com/v1/geocode/reverse?lat=51.21709661403662&lon=6.7782883744862374&apiKey=2dbf6708e9484c559e44dfdde6978423*/
+
+
+
+
+}
+function geetjsonrute(){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute);
+  let txtarr = [];
+  mapshow.getLayer('layerKetDistance').clear();
+  if(ee.rute.length>1){
+    for (let i = 0; i <= ee.rute.length - 1; i++) {
+      if(ee.rute[i].lat==''||ee.rute[i].long==''){
+      }else{
+        txtarr.push(ee.rute[i].lat+','+ee.rute[i].long);
+      }
+    }
+    if(txtarr.length>1){
+      let txt = txtarr.join("|");
+      console.log(txt);
+      //urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=motorcycle&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
+      urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints='+txt+'&mode=motorcycle&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
+      then(function(t){
+        doGenerateRoute(t.features[0]);
+        /*console.log(t);
+
+      https://api.geoapify.com/v1/routing?waypoints=-0.032245459875781535,109.30750151414202|-0.048003849310831015,109.3103666765686|-0.057110968898911096,109.33564150226573|-0.0398176733593516,109.3613256368809&mode=drive&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey=YOUR_API_KEY
+
+
+      console.log(t.statusCode);
+      console.log(t.features);
+      console.log(t.properties);*/
+      })
+      .then(function(){
+      });
+    }
+  }
+}
+function doGenerateRoute(t){
+  //console.log(t.properties.legs);
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute); //JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.78,'heightfront':1.63});
+  let frontarea = ee.widthfront*ee.heightfront;
+  let adjustfront = frontarea*ee.adjustfront;
+  let froll = ee.roll*ee.mass*ee.g;
+  let totwh = 0;
+  for (let i = 0; i <= t.geometry.coordinates.length - 1; i++) {
+    //console.log(t.geometry.coordinates[i]);
+    globarr['route'+i] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
+    globarr['route'+i].updateSymbol({
+      'lineColor' : '#c7d8ff',
+      'lineWidth' : 8,
+    });
+    globarr['route'+i].setCoordinates(
+      [
+        t.geometry.coordinates[i]
+      ]
+    );
+  }
+  for (let i = 0; i <= t.properties.legs.length - 1; i++) {
+    console.log(t.properties.legs[i].distance);
+    console.log(t.properties.legs[i].time);
+    //console.log(t.properties.legs[i]);
+    //console.log(t.properties.legs[i].steps);
+    //console.log(t.properties.legs[i].distance);
+    //console.log(t.properties.legs[i].time);
+    for (let j = 0; j <= t.properties.legs[i].steps.length - 1; j++) {
+      //console.log(t.properties.legs[i].steps[j]);
+      globarr['leg'+i+''+j] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
+      globarr['leg'+i+''+j].updateSymbol({
+        'lineColor' : '#507de6',
+        'lineWidth' : 4,
+        'lineJoin' : 'miter',
+        'lineCap':'round',
+        'lineDasharray' : [7,10],
+      });
+      let thearr = []
+      for (let k = t.properties.legs[i].steps[j].from_index; k <= t.properties.legs[i].steps[j].to_index; k++) {
+        //console.log(t.geometry.coordinates[i][k]);
+        thearr.push(t.geometry.coordinates[i][k]);
+      }
+      //console.log(thearr);
+      //console.log(t.properties.legs[i].steps[j]);
+      let da=$('<div />').attr({'class':'card','style':'width:100%;'}),
+      db=$('<div />').attr({'class':'card-header'}),
+      dc=$('<h3 />').attr({'class':'card-title'}).html('<i class="fa fa-map-pin mr-1"></i>'+t.properties.legs[i].steps[j].instruction.text),
+      dd=$('<div />').attr({'class':'card-body'});
+      $('#detaildialog').append(da);
+
+      if(parseFloat(t.properties.legs[i].steps[j].time)!=0){
+        let legdistance = parseFloat(t.properties.legs[i].steps[j].distance);
+        let legtime = parseFloat(t.properties.legs[i].steps[j].time);
+        let legspeed = legdistance/legtime;
+        let legspeedtxt = legspeed*3.6;
+        let legspeedsquare = legspeed*legspeed;
+
+
+        let proll = froll*legspeed;
+
+        let powair = 0.5*ee.densitiy*legspeedsquare*ee.coefair*adjustfront;
+        let airresist = powair*legspeed;
+        let totpower = Number(airresist.toFixed(2))+Number(proll.toFixed(2));
+        let totpowertext = totpower/1000;
+        let wattperleg = Number(totpower.toFixed(2))*legtime;
+        let perhour = wattperleg/3600;
+        let perhourtext = perhour/1000;
+        totwh += perhour;
+
+
+        let de=$('<ul />').attr({'class':'list-group list-group-flush'}),
+        df=$('<li />').attr({'class':'list-group-item'}).html("Jarak : "+legdistance+" meter"),
+        dg=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Kecepatan Rata-rata: "+Number(legspeedtxt.toFixed(2))+" km/H"),
+        dh=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Kebutuhan Daya : "+Number(totpowertext.toFixed(2))+" Kw"),
+        di=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Energi Digunakan : "+Number(perhourtext.toFixed(5))+" KwH");
+        de.append([df,dg,dh,di]);
+        dd.append(de);
+        /*console.log(legspeed);
+        console.log(proll.toFixed(2));
+        console.log(airresist.toFixed(2));
+        console.log(totpower);
+        console.log(perhour);*/
+
+        /*<div class="card" style="width:100%;">
+          
+          <div class="card-header">
+            <h3 class="card-title"><i class="fa fa-map-pin mr-1"></i>Detail</h3>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+          </div>
+        </div>*/
+
+
+      db.append(dc);
+      da.append([db,dd]);
+      }
+      globarr['leg'+i+''+j].setCoordinates(
+        [
+          thearr
+        ]
+      );
+    }
+
+    /*globarr['leg'+i] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
+    globarr['leg'+i].updateSymbol({
+      'lineColor' : '#2129ff',
+      'lineWidth' : 3,
+    });*/
+    /*globarr['leg'+i].setCoordinates(
+      [
+        t.geometry.coordinates[i]
+      ]
+    );
+    speed = distance/time
+    distance = speed x time
+    speed = distance/time*/
+  }
+  let totwhtext = totwh/1000;
+  let timmtext = t.properties.time/60;
+  let ea=$('<div />').attr({'class':'card','style':'width:100%;'}),
+  eb=$('<div />').attr({'class':'card-header'}),
+  ec=$('<h3 />').attr({'class':'card-title'}).html('<i class="fa fa-map-pin mr-1"></i> Prakiraan Total Energi'),
+  ed=$('<div />').attr({'class':'card-body'});
+
+  let eee=$('<ul />').attr({'class':'list-group list-group-flush'}),
+  ef=$('<li />').attr({'class':'list-group-item'}).html("Jarak Total : "+t.properties.distance+" meter"),
+  eg=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Waktu Tempuh : "+Number(timmtext.toFixed(0))+" menit"),
+  //eh=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Kebutuhan Daya : "+Number(totpowertext.toFixed(2))+" Kw"),
+  ei=$('<li />').attr({'class':'list-group-item'}).html("Prakiraan Energi Total : "+Number(totwhtext.toFixed(5))+" KwH");
+  eee.append([ef,eg,ei]);
+  ed.append(eee);
+  eb.append(ec);
+  ea.append([eb,ed]);
+  $('#detaildialog').prepend(ea);
+
+
+  console.log(totwhtext);console.log(t);
+}
+    </script>
+  </body>
+</html>
