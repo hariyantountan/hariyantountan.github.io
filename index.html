@@ -114,18 +114,41 @@
     <div class="card-header text-center">
       <a href="#" class="h5"><b>KAJIAN PENGGUNAAN ENERGI KENDARAAN LISTRIK RODA DUA BERDASARKAN RUTE PERJALANAN SEPEDA MOTOR PADA PETA DIGITAL</b></a>
     </div>
-    <div class="card-header text-center">
-    </div>
     <div class="card-body">
-    <div class="card-header text-center">
-    </div>
       <p class="login-box-msg">Aplikasi untuk menampilkan rute perjalanan dan energi yang digunakan</p>
-
-      
-
-      <div class="social-auth-links text-center mt-2 mb-3">
-        
-      </div>
+        <h6 class="">Keofisien penentuan perhitungan penggunaan energi</h6>
+        <form class="">
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Berat Kendaraan dan Muatan</span>
+    <input type="number" class="form-control" id="nilmassa" onchange="ubahNilaiKoef();"><span class="input-group-text">Kg</span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Koefisien Tahanan Gelincir</span>
+    <input type="number" step=0.01 class="form-control" id="nilrolres" onchange="ubahNilaiKoef();"><span class="input-group-text"></span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Kepadatan Udara</span>
+    <input type="number" step=0.01 class="form-control" id="nilairdens" onchange="ubahNilaiKoef();"><span class="input-group-text">Kg/m<sup>3</sup></span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Koefisien Hambatan Fluida Udara</span>
+    <input type="number" step=0.01 class="form-control" id="nilairres" onchange="ubahNilaiKoef();"><span class="input-group-text"></span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Nilai Penyesuaian Hambatan </span>
+    <input type="number" step=0.01 class="form-control" id="niladjres" disabled=""><span class="input-group-text"></span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Tinggi Kendaraan dan Pengendara</span>
+    <input type="number" step=0.01 class="form-control" id="niltinggi" onchange="ubahNilaiKoef();"><span class="input-group-text">m</span>
+  </div>
+  <div class="input-group input-group-sm">
+    <span class="input-group-text">Lebar Kendaraan dan Pengendara</span>
+    <input type="number" step=0.01 class="form-control" id="nillebar" onchange="ubahNilaiKoef();"><span class="input-group-text">m</span>
+  </div>
+          <small class="text-body-secondary">Nilai bawaan koefisien tersebut dapat ditentukan sesaui kebutuhan.</small>
+          <hr class="my-4">
+        </form>
       <!-- /.social-auth-links -->
     </div>
     <!-- /.card-body -->
@@ -219,10 +242,30 @@ function toCenterLoc(){
     }
   })
 }
+function ubahNilaiKoef(){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute);
+  ee.mass=Number($('#nilmassa').val());
+  ee.roll=Number($('#nilrolres').val());
+  ee.densitiy=Number($('#nilairdens').val());
+  ee.coefair=Number($('#nilairres').val());
+  ee.adjustfront=Number($('#niladjres').val());
+  ee.widthfront=Number($('#niltinggi').val());
+  ee.heightfront=Number($('#nillebar').val());
+  let s = JSON.stringify(ee);
+  localStorage.setItem('listrute',s);
+}
 function clearRuteExist(){
   let b=locStorr(),c=sesStorr();
   let r=[{"lat":'',"long":'','nm':'-<br />-'},{"lat":'',"long":'','nm':'-<br />-'}],s = JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.78,'heightfront':1.63});
     localStorage.setItem('listrute',s);
+    $('#nilmassa').val('200');
+    $('#nilrolres').val('0.01');
+    $('#nilairdens').val('1.23');
+    $('#nilairres').val('0.88');
+    $('#niladjres').val('0.70');
+    $('#niltinggi').val('1.63');
+    $('#nillebar').val('0.78');
   genListRuteField();
 }
 
