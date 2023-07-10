@@ -313,20 +313,10 @@ function doSubmitData(){
   let ee=JSON.parse(b.listrute); 
   let que = {'q1':$("input[name='q1']:checked").val(),'q2':$("input[name='q2']:checked").val(),'q3':$("input[name='q3']:checked").val()};
 
-  //globarr['forsub']={'var':ee,'value':arrdet,'geo':thekirarr};
-  /*console.log(globarr['arrdet']);
-  console.log(globarr['geo']);
-  console.log(ee);*/
   let topost = {'kuesioner':que,'detail':globarr['arrdet'],'koodinat':globarr['geo'],'variabel':ee,'total':globarr['totval']};
-  console.log(topost);
+
   let vlast = JSON.stringify(topost);
-  /*if (typeof(globarr['forsub']) !== "undefined") {
-    let vlass = {'detail':globarr['forsub'],'kuesioner':que};
-    topost = JSON.stringify(vlass);
-  console.log(vlass.detail);
-    }else{
-    topost = JSON.stringify({});;
-  }*/
+
   urlLoader('POST',sublist,'json',vlast).
   then(function(t){
     $('#modal-submitdata').modal('hide');
@@ -342,7 +332,7 @@ function reqToGoogle(){
   urlLoader('GET',apiilist,'json','').
   then(function(t){
     apii=t.api;
-    console.log(t.api);
+
   })  
 }
 function toCenterLoc(){
