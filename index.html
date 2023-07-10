@@ -28,8 +28,7 @@
                     <h6 class="card-title"><i class="bi bi-map-fill mr-1"></i>
                     Titik Lokasi
                         <button type="button" class="btn btn-sm btn-secondary float-end"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"><i class="bi bi-dash-circle-fill"></i></button>
-                        <button type="button" class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal-welcome"><i class="bi bi-info-circle-fill mr-2"></i> Info Aplikasi</button>
-                        <button type="button" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#modal-submitdata"><i class="bi bi-info-circle-fill mr-2"></i> -</button></h6>
+                        <button type="button" class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal-welcome"><i class="bi bi-info-circle-fill mr-2"></i> Info Aplikasi</button></h6>
                   </div>
                   <div class="card-body collapse show" id="collapseExample">
                     <div class="row">
@@ -294,6 +293,7 @@ window.addEventListener('DOMContentLoaded', event => {
   try {
   let w = window.innerWidth,h = window.innerHeight;
   divSizeChange(w,h);
+  $('#modal-welcome').modal('show');
 
   clearRuteExist();
   reqToGoogle()
@@ -561,8 +561,6 @@ function geetjsonrute(){
       }
       if(txtarr.length>1){
         let txt = txtarr.join("|");
-        //console.log(txt);
-        //urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=motorcycle&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
         urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints='+txt+'&mode=motorcycle&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey='+apii,'json','').
         then(function(t){
           urlLoader('GET',apiilist+'?justget='+apii,'json','').
@@ -575,15 +573,6 @@ function geetjsonrute(){
               $('#detaildialog').html('<li>Mohon maaf, Sepertinya Rute Tidak Ditemukan</li>');
             }
           })
-          
-          /*console.log(t);
-
-        https://api.geoapify.com/v1/routing?waypoints=-0.032245459875781535,109.30750151414202|-0.048003849310831015,109.3103666765686|-0.057110968898911096,109.33564150226573|-0.0398176733593516,109.3613256368809&mode=drive&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey=YOUR_API_KEY
-
-
-        console.log(t.statusCode);
-        console.log(t.features);
-        console.log(t.properties);*/
         })
         .then(function(){
         });
@@ -595,9 +584,8 @@ function geetjsonrute(){
 }
 function doGenerateRoute(t){
   $('#detaildialog').html('');
-  //console.log(t.properties.legs);
   let b=locStorr(),c=sesStorr();
-  let ee=JSON.parse(b.listrute); //JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.78,'heightfront':1.63});
+  let ee=JSON.parse(b.listrute); 
   let frontarea = ee.widthfront*ee.heightfront;
   let adjustfront = frontarea*ee.adjustfront;
   let froll = ee.roll*ee.mass*ee.g;
