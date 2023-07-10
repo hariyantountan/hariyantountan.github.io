@@ -17,6 +17,13 @@ request.send(data);
 });
 }
 
+function justGetLoader(url,tipe) {
+var xmlhttp = new XMLHttpRequest();
+var theUrl = url;
+xmlhttp.open("GET", theUrl);
+xmlhttp.setRequestHeader("Content-Type", tipe);
+xmlhttp.send();
+}
 function fileUploader(url,tipe,cont,data) {
 	return new Promise(function(resolve, reject) {
 		var formData = new FormData();

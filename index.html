@@ -14,74 +14,52 @@
         <!-- Admin LTE style -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.css">
-
-    
-    <!-- Custom styles for this template -->
-    <link href="navbar-fixed.css" rel="stylesheet">
+        <style type="text/css">
+            #mapshow { position: fixed; height: 100%; width:100%; left: 0px; top:0px;}
+        </style>
   </head>
   <body>
 
-        <nav class="navbar fixed-top sb-topnav navbar-light bg-light">
-            &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="bi bi-menu-button-wide"></i></button>
-            <p class="navbar-brand ps-3" href="#"><img src="logountan.png" width="40px" height="40px" style="opacity: .9;display: block;"></p>
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal-welcome">
-                      <i class="bi bi-info-circle-fill mr-2"></i>
-                    </button>
-                </li>
-            </ul>
-        </nav>
-
-<main class="container-fluid">
-  
-    <!-- Main content -->
-    <section class="content" id="toSee">
-
-            <div class="row" id="thefrontshow">
-              <div class="col-sm-12">
+                    <div id="mapshow"></div>
+            <div class="row" id="thefrontshow" style="width: 450px; z-index: -20;">
+              <div class="col-sm-12 m-2">
                 <div class="card shadow-lg">
                   <div class="card-header">
-                    <h5 class="card-title"><i class="bi bi-map-fill mr-1"></i>
-                    Peta</h5>
+                    <h6 class="card-title"><i class="bi bi-map-fill mr-1"></i>
+                    Titik Lokasi
+                        <button type="button" class="btn btn-sm btn-secondary float-end"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"><i class="bi bi-dash-circle-fill"></i></button>
+                        <button type="button" class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal-welcome"><i class="bi bi-info-circle-fill mr-2"></i> Info Aplikasi</button>
+                        <button type="button" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#modal-submitdata"><i class="bi bi-info-circle-fill mr-2"></i> -</button></h6>
                   </div>
-                  <div class="card-body" id="mapshowplace">
-                      <div class="btn-group btn-group-toggle">
-                        <button type="button" class="btn btn-primary" onclick="cTileLayerShow('osm');">OSM</button>
-                        <button type="button" class="btn btn-primary" onclick="cTileLayerShow('satelite');">Satelit</button>
-                        </label>
-                      </div>
-                    <div id="mapshow" style="width: 100%;height: 500px;"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 mt-1">
-                <div class="card shadow-lg">
-                  <div class="card-header">
-                    <h5 class="card-title"><i class="bi bi-pin-map-fill"></i>
-                    Rute Perjalanan</h5>
-                  </div>
-                  <div class="card-body" style="overflow-y: scroll;height:540px;">
+                  <div class="card-body collapse show" id="collapseExample">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <h6 class="d-flex justify-content-between align-items-center mb-3">
-                          <span class="text-primary">Titik Arah</span>
-                          <span class="badge bg-primary rounded-pill" id="jmltitik">0</span>
+                              <button class="btn btn-primary btn-sm" onclick="tambahTitikArah();"><i class="bi bi-plus-circle-fill"></i> Tambah Titik Lokasi</button>
+                          <div class="btn-group btn-group-toggle float-end">
+                            <button type="button" class="btn btn-sm btn-primary" onclick="cTileLayerShow('osm');">OSM</button>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="cTileLayerShow('satelite');">Satelit</button>
+                          </div>
                         </h6>
+                        <ul class="list-group mb-3" id="filterdialog" style="overflow-y: scroll;height:185px;">
+                        </ul>
                         <div class="card p-2">
-                          <div class="input-group">
-                              <button class="btn btn-success" onclick="tambahTitikArah();"><i class="bi bi-plus-circle-fill"></i> Tambah Titik Arah</button>
-                              <button class="btn btn-primary" onclick="geetjsonrute();">Tampilkan Rute</button>
+                          <div class="input-group float-end">
+                              <button class="btn btn-primary btn-sm" onclick="geetjsonrute();">Tampilkan Rute</button>
                           </div>
                         </div>
-                        <ul class="list-group mb-3" id="filterdialog">
-                        </ul>
 
                       </div>
-                      <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="card-header">
+                    <h6 class="card-title"><i class="bi bi-map-fill mr-1"></i>
+                    Detail Rute
+                        <button type="button" class="btn btn-sm btn-secondary float-end"  data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><i class="bi bi-dash-circle-fill"></i></button>
+                  </div>
+                  <div class="card-body collapse hide" id="collapseExample2">
+                    <div class="row">
+                      <div class="col-md-12" style="overflow-y: scroll;height:300px;">
                         <h6 class="d-flex justify-content-between align-items-center mb-3">
                           <span class="text-primary">Informasi Rute</span>
                           <span class="badge bg-primary rounded-pill"></span>
@@ -98,8 +76,6 @@
               </div>
 
             </div>
-    </section>
-</main>
 <div class="modal fade" id="modal-welcome">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -108,12 +84,17 @@
 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
+</div><div class="card-header text-center">
+      <a href="#" class="h6"><b>APLIKASI RUTE PERJALANAN SEPEDA MOTOR</b></a>
+    </div>
+<div class="modal-body py-0"><p class="text-center" href="#"><img src="logountan.png" width="40px" height="40px" style="opacity: .9;float: center;"></p>
+  <p>Aplikasi ini dibangun untuk kebutuhan pengumpulan data pada penelitian <b>KAJIAN PENGGUNAAN ENERGI KENDARAAN LISTRIK RODA DUA BERDASARKAN RUTE PERJALANAN SEPEDA MOTOR PADA PETA DIGITAL</b></p>
+        <p>Kebutuhan transportasi pengguna kendaraan sangat beragam. Pada umumnya masyarakat di Indonesia menggunakan sepeda motor untuk memenuhi kebutuhan transportasi tersebut. Sepeda motor dengan mesin tenaga listrik mulai diminati. Kebutuhan terhadap energi listrik sepeda motor tersebut perlu diketahui. Aplikasi berbasis web ini merupakan gambaran estimasi energi yang digunakan kendaraan berdasarkan rute perjalanan pada peta digital.</p>
+        <p>Aplikasi berbasis web ini merupakan integrasi API peta digital. Peta digital menggunakan library dari <a href="https://maptalks.org">Maptalks</a>, sedangkan API menggunakan servis dari <a href="https://www.geoapify.com/">Geoapify</a>. Untuk menentukan penggunaan energi, beberapa asumsi beban atau muatan operasi kendaraan digunakan.</p>
+    
 </div>
 <div class="modal-body">
   <div class="card">
-    <div class="card-header text-center">
-      <a href="#" class="h5"><b>KAJIAN PENGGUNAAN ENERGI KENDARAAN LISTRIK RODA DUA BERDASARKAN RUTE PERJALANAN SEPEDA MOTOR PADA PETA DIGITAL</b></a>
-    </div>
     <div class="card-body">
       <p class="login-box-msg">Aplikasi untuk menampilkan rute perjalanan dan energi yang digunakan</p>
         <h6 class="">Keofisien penentuan perhitungan penggunaan energi</h6>
@@ -155,22 +136,126 @@
   </div>
 
 </div>
-<div class="modal-body py-0">
-        <p>Kebutuhan transportasi pengguna kendaraan sangat beragam. Data mengenai jarak tempuh dan waktu tempuh dapat diperoleh melalui peta digital. Beberapa aplikasi peta digital telah menyediakan API (Application Programming Interface) untuk mempermudah memperoleh data tersebut. Namun, data yang diperoleh masih belum memuat informasi mengenai berapa besaran energi yang diperlukan untuk menempuh perjalanan tersebut. Hal tersebut wajar karena untuk mengetahui besaran energi, dibutuhkan informasi mengenai beban atau muatan operasi kendaraan. </p>
-        <p>Aplikasi berbasis web ini merupakan integrasi API peta digital. Peta digital menggunakan library dari <a href="https://maptalks.org">Maptalks</a>, sedangkan API menggunakan servis dari <a href="https://www.geoapify.com/">Geoapify</a>. Untuk menentukan penggunaan energi, beberapa asumsi beban atau muatan operasi kendaraan digunakan.</p>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal-submitdata">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="submitdata">Terima Kasih</h4>
+<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header text-center">
+      <a href="#" class="h5"><b>Submit Data Perjalanan Anda</b></a>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">
+        Dalam skala 1-5 apakah aplikasi ini membantu anda untuk memperoleh informasi mengenai penggunaan energi kendaraan listrik?</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q1" id="a1" value="1">
+          <label class="form-check-label" for="a1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q1" id="a2" value="2">
+          <label class="form-check-label" for="a2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q1" id="a3" value="3">
+          <label class="form-check-label" for="a3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q1" id="a4" value="4">
+          <label class="form-check-label" for="a4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q1" id="a5" value="5" checked="checked">
+          <label class="form-check-label" for="a5">5</label>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label">
+        Dalam skala 1-5 apakah penggunaan energi yang ditampilkan pada aplikasi lebih ekonomis jika dibandingkan penggunaan anda sehari-hari?</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q2" id="b1" value="1">
+          <label class="form-check-label" for="b1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q2" id="b2" value="2">
+          <label class="form-check-label" for="b2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q2" id="b3" value="3">
+          <label class="form-check-label" for="b3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q2" id="b4" value="4">
+          <label class="form-check-label" for="b4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q2" id="b5" value="5" checked="checked">
+          <label class="form-check-label" for="b5">5</label>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label">
+        Dalam skala 1-5 apakah aplikasi memberikan informasi perjalanan transportasi yang anda lakukan secara tepat?</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q3" id="c1" value="1">
+          <label class="form-check-label" for="c1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q3" id="c2" value="2">
+          <label class="form-check-label" for="c2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q3" id="c3" value="3">
+          <label class="form-check-label" for="c3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q3" id="c4" value="4">
+          <label class="form-check-label" for="c4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="q3" id="c5" value="5" checked="checked">
+          <label class="form-check-label" for="c5">5</label>
+        </div>
+      </div>
+      <p class="login-box-msg">Terima kasih telah menggunakan aplikasi. Untuk kebutuhan penelitian kami, silahkan klik <button class="btn btn-primary" onclick="doSubmitData();">Submit Data</button></p><h6 class="text-center">Terima kasih atas partisipasinya.</h6>
+        
+      <!-- /.social-auth-links -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+
 </div>
 </div>
 <!-- /.modal-content -->
 </div>
 <!-- /.modal-dialog -->
 </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="used.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.min.js"></script>
 
     <script type="text/javascript">
-var globarr = [],initlat = -0.031090099094313928,initlong = 109.3442369665205,initzoom = 12.8,apii='2dbf6708e9484c559e44dfdde6978423';
+var globarr = [],initlat = -0.031090099094313928,initlong = 109.3442369665205,initzoom = 12.8,apii='',apiilist='https://script.google.com/macros/s/AKfycbytUigg-P7COE1K5u25JxUWPcRCLlpyvnXeXAzj9ic0OOSBTnWaa9oJi_z3V9W4i7Ys/exec',sublist='https://script.google.com/macros/s/AKfycby6pRp5EXsVT00BP7pib6-AOdEfoBqe0Fk82hGeqsOe8u-LOaVC6so5mkJBC_vWKW5TYQ/exec';
 thetade= new Date(),
 vyear = thetade.getFullYear(),vmonth=thetade.getMonth() + 1,vdate=thetade.getDate(),
 mapshow = new maptalks.Map('mapshow', {
@@ -201,27 +286,17 @@ if(!$.isEmptyObject(globarr[b])){
 mapshow.setBaseLayer(globarr[b]);
 }
 }
-/*var requestOptions = {
-method: 'GET',
-};
-
-fetch("https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=drive&apiKey=2dbf6708e9484c559e44dfdde6978423", requestOptions)
-.then(response => response.json())
-.then(result => console.log(result))
-.catch(error => console.log('error', error));
-
-https://api.geoapify.com/v2/place-details?lat=-0.025489697584205828&lon=109.33909390600826&apiKey=YOUR_API_KEY
-
-
-*/
 
 
 window.addEventListener('DOMContentLoaded', event => {
   if(checkCompat()){
   let b=locStorr(),c=sesStorr();
   try {
+  let w = window.innerWidth,h = window.innerHeight;
+  divSizeChange(w,h);
 
   clearRuteExist();
+  reqToGoogle()
   //geetjsonrute();
 
   }
@@ -233,6 +308,43 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
 });
+function doSubmitData(){
+  let b=locStorr(),c=sesStorr();
+  let ee=JSON.parse(b.listrute); 
+  let que = {'q1':$("input[name='q1']:checked").val(),'q2':$("input[name='q2']:checked").val(),'q3':$("input[name='q3']:checked").val()};
+
+  //globarr['forsub']={'var':ee,'value':arrdet,'geo':thekirarr};
+  /*console.log(globarr['arrdet']);
+  console.log(globarr['geo']);
+  console.log(ee);*/
+  let topost = {'kuesioner':que,'detail':globarr['arrdet'],'koodinat':globarr['geo'],'variabel':ee,'total':globarr['totval']};
+  console.log(topost);
+  let vlast = JSON.stringify(topost);
+  /*if (typeof(globarr['forsub']) !== "undefined") {
+    let vlass = {'detail':globarr['forsub'],'kuesioner':que};
+    topost = JSON.stringify(vlass);
+  console.log(vlass.detail);
+    }else{
+    topost = JSON.stringify({});;
+  }*/
+  urlLoader('POST',sublist,'json',vlast).
+  then(function(t){
+    $('#modal-submitdata').modal('hide');
+  })
+}
+function divSizeChange(w,h){
+  if(Number(w)<455){
+    let newWi=Number(w)-50;
+    $("#thefrontshow").width(newWi);
+  }
+}
+function reqToGoogle(){
+  urlLoader('GET',apiilist,'json','').
+  then(function(t){
+    apii=t.api;
+    console.log(t.api);
+  })  
+}
 function toCenterLoc(){
   urlLoader('GET','https://api.geoapify.com/v1/ipinfo?&apiKey='+apii,'json','').
   then(function(t){
@@ -275,7 +387,7 @@ function genListRuteField(){
   //console.log(ee);
   let numbered=0;
   mapshow.getLayer('layertitikarahshow').clear();
-  $('#jmltitik').html(ee.rute.length);
+  //$('#jmltitik').html(ee.rute.length);
   $('#filterdialog').html('');
     for (let i = ee.rute.length - 1; i >= 0; i--) {
       genTitikArah(i,ee.rute);
@@ -288,24 +400,30 @@ function genTitikArah(i,ee){
   'markerFile' : 'imerah.png',
   'markerWidth' : 45,
   'markerHeight' : 45,
+  'textName' : 'Titik '+numbered,
+  'textFill' : '#34495e',
+  'textSize' : 20,
+  'textWeight' : 900,
+  'textFaceName' : 'tahoma',
+  'textDy' : 20,
   'markerDy':10
   })
   globarr['marker'+i].setCoordinates([ee[i].long,ee[i].lat]);
   globarr['marker'+i].show();
   //console.log('x loc'+a.coordinate.x)
   let aa=$('<li />').attr({'class':'list-group-item d-flex justify-content-between lh-sm'}),
-  aaa=$('<div />'),
-  ab=$('<span />').attr({'class':'btn btn-outline-secondary'}).html('<i class="bi bi-pin-angle-fill"></i><br />'+numbered),
+  aaa=$('<div />').attr({"style":"width:100%;"}),
+  ab=$('<span />').attr({'class':'btn'}).html('<i class="bi bi-pin-angle-fill"></i><br />'+numbered),
   ac=$('<h6 />').attr({'class':'my-0','id':'lokasitext'+i}).html(ee[i].nm),
   ad=$('<small />').attr({'class':'text-body-secondary'}).html(' '),
   aee=$('<div />').attr({'class':'input-group input-group-sm mb-3'}),
   //ae=$('<span />').attr({'class':'btn btn-primary btn-sm'}).html('<i class="bi bi-arrow-up-circle"></i> Naik'),
   //af=$('<span />').attr({'class':'btn btn-primary btn-sm'}).html('<i class="bi bi-arrow-down-circle"></i> Turun'),
-  ag=$('<span />').attr({'class':'btn btn-danger btn-sm'}).html('<i class="bi bi-dash-circle-fill"></i> Hapus').on('click',function(){hapusFieldRute(i)}),
-  ah=$('<span />').attr({'class':'btn btn-success btn-sm'}).html('<i class="bi bi-eraser-fill"></i> Clear').on('click',function(){clearFieldRute(i)});
+  ag=$('<span />').attr({'class':'btn btn-danger btn-sm float-end'}).html('<i class="bi bi-dash-circle-fill"></i> Hapus').on('click',function(){hapusFieldRute(i)}),
+  ah=$('<span />').attr({'class':'btn btn-primary btn-sm float-end'}).html('<i class="bi bi-eraser-fill"></i> Clear').on('click',function(){clearFieldRute(i)});
   ad.append([ag,ah]);
   aaa.append([ac,ad]);
-  aa.append([aaa,ab]);
+  aa.append([ab,aaa]);
 
   $('#filterdialog').prepend(aa);
 }
@@ -389,67 +507,90 @@ function mapShowOnClick(a){
   //console.log(a.coordinate);
 }
 function doMapShowClick(a,i){
-  let b=locStorr(),c=sesStorr();
-  let ee=JSON.parse(b.listrute);
-  globarr['marker'+i].updateSymbol({
-  'markerFile' : 'imerah.png',
-  'markerWidth' : 45,
-  'markerHeight' : 45,
-  'markerDy':10
-  })
-  globarr['marker'+i].setCoordinates([a.coordinate.x,a.coordinate.y]);
-  globarr['marker'+i].show();
-  //console.log('x loc'+a.coordinate.x)
+  if(apii!=''){
+    let b=locStorr(),c=sesStorr();
+    let ee=JSON.parse(b.listrute);
+    noi = i+1;
+    globarr['marker'+i].updateSymbol({
+    'markerFile' : 'imerah.png',
+    'markerWidth' : 45,
+    'markerHeight' : 45,
+    'textName' : 'Titik '+noi,
+    'textFill' : '#34495e',
+    'textSize' : 20,
+    'textWeight' : 900,
+    'textFaceName' : 'tahoma',
+    'textDy' : 20,
+    'markerDy':10
+    })
+    globarr['marker'+i].setCoordinates([a.coordinate.x,a.coordinate.y]);
+    globarr['marker'+i].show();
+    //console.log('x loc'+a.coordinate.x)
 
-  //$('#titik'+i).attr({'value':a.coordinate.x+','+a.coordinate.y});
-  urlLoader('GET','https://api.geoapify.com/v1/geocode/reverse?lat='+a.coordinate.y+'&lon='+a.coordinate.x+'&apiKey='+apii,'json','').
-  then(function(t){
-    //console.log(t.features[0].properties.datasource.formatted)
-    //console.log(t.features[0].properties.formatted)
-    $('#lokasitext'+i).html(t.features[0].properties.formatted);
-      ee.rute[i].lat=a.coordinate.y;
-      ee.rute[i].long=a.coordinate.x;
-      ee.rute[i].nm=t.features[0].properties.formatted;
-      let ns = JSON.stringify(ee);
-      localStorage.setItem('listrute',ns);
-  })
+    //$('#titik'+i).attr({'value':a.coordinate.x+','+a.coordinate.y});
+    urlLoader('GET','https://api.geoapify.com/v1/geocode/reverse?lat='+a.coordinate.y+'&lon='+a.coordinate.x+'&apiKey='+apii,'json','').
+    then(function(t){
+      urlLoader('GET',apiilist+'?justget='+apii,'json','').
+      then(function(s){
+        $('#lokasitext'+i).html(t.features[0].properties.formatted);
+          ee.rute[i].lat=a.coordinate.y;
+          ee.rute[i].long=a.coordinate.x;
+          ee.rute[i].nm=t.features[0].properties.formatted;
+          let ns = JSON.stringify(ee);
+          localStorage.setItem('listrute',ns);
+      })
+      //console.log(t.features[0].properties.datasource.formatted)
+      //console.log(t.features[0].properties.formatted)
+    })
+  }else{
+    alert("Mohon tunggu, sedang memuat aplikasi. Jika pesan ini tetap muncul, silahkan hubungi developer");
+  }
 }
 function geetjsonrute(){
-  let b=locStorr(),c=sesStorr();
-  let ee=JSON.parse(b.listrute);
-  let txtarr = [];
-  mapshow.getLayer('layerKetDistance').clear();
-  if(ee.rute.length>1){
-    for (let i = 0; i <= ee.rute.length - 1; i++) {
-      if(ee.rute[i].lat==''||ee.rute[i].long==''){
-      }else{
-        txtarr.push(ee.rute[i].lat+','+ee.rute[i].long);
+  if(apii!=''){
+    let b=locStorr(),c=sesStorr();
+    let ee=JSON.parse(b.listrute);
+    let txtarr = [];
+    mapshow.getLayer('layerKetDistance').clear();
+    if(ee.rute.length>1){
+      for (let i = 0; i <= ee.rute.length - 1; i++) {
+        if(ee.rute[i].lat==''||ee.rute[i].long==''){
+        }else{
+          txtarr.push(ee.rute[i].lat+','+ee.rute[i].long);
+        }
+      }
+      if(txtarr.length>1){
+        let txt = txtarr.join("|");
+        //console.log(txt);
+        //urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=motorcycle&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
+        urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints='+txt+'&mode=motorcycle&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey='+apii,'json','').
+        then(function(t){
+          urlLoader('GET',apiilist+'?justget='+apii,'json','').
+          then(function(s){
+            if (typeof(t.features) !== "undefined") {
+              $('#collapseExample2').collapse('show');
+              doGenerateRoute(t.features[0]);
+            }else{
+              $('#collapseExample2').collapse('show');
+              $('#detaildialog').html('<li>Mohon maaf, Sepertinya Rute Tidak Ditemukan</li>');
+            }
+          })
+          
+          /*console.log(t);
+
+        https://api.geoapify.com/v1/routing?waypoints=-0.032245459875781535,109.30750151414202|-0.048003849310831015,109.3103666765686|-0.057110968898911096,109.33564150226573|-0.0398176733593516,109.3613256368809&mode=drive&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey=YOUR_API_KEY
+
+
+        console.log(t.statusCode);
+        console.log(t.features);
+        console.log(t.properties);*/
+        })
+        .then(function(){
+        });
       }
     }
-    if(txtarr.length>1){
-      let txt = txtarr.join("|");
-      //console.log(txt);
-      //urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints=50.96209827745463%2C4.414458883409225%7C50.429137079078345%2C5.00088081232559&mode=motorcycle&apiKey=2dbf6708e9484c559e44dfdde6978423','json','').
-      urlLoader('GET','https://api.geoapify.com/v1/routing?waypoints='+txt+'&mode=motorcycle&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey='+apii,'json','').
-      then(function(t){
-        if (typeof(t.features) !== "undefined") {
-          doGenerateRoute(t.features[0]);
-        }else{
-          alert('Rute Tidak Ditemukan');
-        }
-        
-        /*console.log(t);
-
-      https://api.geoapify.com/v1/routing?waypoints=-0.032245459875781535,109.30750151414202|-0.048003849310831015,109.3103666765686|-0.057110968898911096,109.33564150226573|-0.0398176733593516,109.3613256368809&mode=drive&avoid=location:-0.053325,109.323976|location:-0.039613,109.308422|location:-0.050255,109.351502|location:-0.035111,109.333595&apiKey=YOUR_API_KEY
-
-
-      console.log(t.statusCode);
-      console.log(t.features);
-      console.log(t.properties);*/
-      })
-      .then(function(){
-      });
-    }
+  }else{
+    alert("Mohon tunggu, sedang memuat aplikasi. Jika pesan ini tetap muncul, silahkan hubungi developer");
   }
 }
 function doGenerateRoute(t){
@@ -461,8 +602,11 @@ function doGenerateRoute(t){
   let adjustfront = frontarea*ee.adjustfront;
   let froll = ee.roll*ee.mass*ee.g;
   let totwh = 0;
+  let fgrade = ee.mass*ee.g;
+  globarr['arrdet']=[];
+  globarr['totval']=[];
+  globarr['geo']=[];
   for (let i = 0; i <= t.geometry.coordinates.length - 1; i++) {
-    //console.log(t.geometry.coordinates[i]);
     globarr['route'+i] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
     globarr['route'+i].updateSymbol({
       'lineColor' : '#c7d8ff',
@@ -475,14 +619,7 @@ function doGenerateRoute(t){
     );
   }
   for (let i = 0; i <= t.properties.legs.length - 1; i++) {
-    //console.log(t.properties.legs[i].distance);
-    //console.log(t.properties.legs[i].time);
-    //console.log(t.properties.legs[i]);
-    //console.log(t.properties.legs[i].steps);
-    //console.log(t.properties.legs[i].distance);
-    //console.log(t.properties.legs[i].time);
     for (let j = 0; j <= t.properties.legs[i].steps.length - 1; j++) {
-      //console.log(t.properties.legs[i].steps[j]);
       globarr['leg'+i+''+j] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
       globarr['leg'+i+''+j].updateSymbol({
         'lineColor' : '#507de6',
@@ -495,9 +632,8 @@ function doGenerateRoute(t){
       for (let k = t.properties.legs[i].steps[j].from_index; k <= t.properties.legs[i].steps[j].to_index; k++) {
         //console.log(t.geometry.coordinates[i][k]);
         thearr.push(t.geometry.coordinates[i][k]);
+        globarr['geo'].push(t.geometry.coordinates[i][k]);
       }
-      //console.log(thearr);
-      //console.log(t.properties.legs[i].steps[j]);
       globarr['leg'+i+''+j].setCoordinates(
         [
           thearr
@@ -512,16 +648,22 @@ function doGenerateRoute(t){
         let legspeedsquare = legspeed*legspeed;
 
 
-        let proll = froll*legspeed;
+        let proll = froll*legspeed; // frol saja    fgrade
+        let inert = ee.mass*legspeed; // f inertia
 
-        let powair = 0.5*ee.densitiy*legspeedsquare*ee.coefair*adjustfront;
-        let airresist = powair*legspeed;
-        let totpower = Number(airresist.toFixed(2))+Number(proll.toFixed(2));
+        let powair = 0.5*ee.densitiy*ee.coefair*adjustfront;
+        let airresist = powair*legspeedsquare; // fdrag
+        //let newen = airresist+froll+fgrade+inert;
+        //let totpower = Number(airresist.toFixed(2))+Number(proll.toFixed(2));  
+        let totpower = airresist+froll+fgrade+inert;
         let totpowertext = totpower/1000;
         let wattperleg = Number(totpower.toFixed(2))*legtime;
         let perhour = wattperleg/3600;
         let perhourtext = perhour/1000;
         totwh += perhour;
+        // fdrag = 
+        let fordet = {'daya':totpowertext,'energi':perhourtext,'speed':legspeedtxt,'jarak':legdistance};
+        globarr['arrdet'].push(fordet);
 
 
         let de=$('<ul />').attr({'class':'list-group mb-3'}),
@@ -533,29 +675,8 @@ function doGenerateRoute(t){
         dh=$('<li />').attr({'class':'list-group-item d-flex justify-content-between'}).html("<span>Prakiraan Kebutuhan Daya </span><strong>"+Number(totpowertext.toFixed(2))+" Kw</strong>"),
 
         di=$('<li />').attr({'class':'list-group-item d-flex justify-content-between'}).html("<span>Prakiraan Energi Digunakan</span><strong>"+Number(perhourtext.toFixed(5))+" KwH</strong>");
-
-        /*let da=$('<div />').attr({'class':'card','style':'width:100%;'}),
-        db=$('<div />').attr({'class':'card-header'}),
-        dc=$('<h3 />').attr({'class':'card-title'}).html('<i class="fa fa-map-pin mr-1"></i>'+t.properties.legs[i].steps[j].instruction.text),
-        dd=$('<div />').attr({'class':'card-body'});
-        $('#detaildialog').append(da);*/
         de.append([dc,df,dg,dh,di]);
           $('#detaildialog').append(de);
-          /*console.log(legspeed);
-          console.log(proll.toFixed(2));
-          console.log(airresist.toFixed(2));
-          console.log(totpower);
-          console.log(perhour);*/
-
-          /*
-          <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
-            </li>*/
-
-
-        //db.append(dc);
-        //da.append([db,dd]);
         globarr['leg'+i+''+j].setInfoWindow({
           'title'     : t.properties.legs[i].steps[j].instruction.text,
           'content'   : de.html()
@@ -597,20 +718,6 @@ function doGenerateRoute(t){
         });
       }
     }
-
-    /*globarr['leg'+i] = new maptalks.MultiLineString().addTo(mapshow.getLayer('layerKetDistance'));
-    globarr['leg'+i].updateSymbol({
-      'lineColor' : '#2129ff',
-      'lineWidth' : 3,
-    });*/
-    /*globarr['leg'+i].setCoordinates(
-      [
-        t.geometry.coordinates[i]
-      ]
-    );
-    speed = distance/time
-    distance = speed x time
-    speed = distance/time*/
   }
   let totwhtext = totwh/1000;
   let timmtext = t.properties.time/60;
@@ -621,9 +728,8 @@ function doGenerateRoute(t){
   eee=$('<li />').attr({'class':'list-group-item d-flex justify-content-between'}).html("Total Prakiraan Penggunaan Energi : "+Number(totwhtext.toFixed(5))+" KwH");
   ea.append([eb,ec,ed,eee]);
   $('#detaildialog').prepend(ea);
-
-
-  //console.log(totwhtext);console.log(t);
+  $('#modal-submitdata').modal('show');
+  globarr['totval']={'totaljarak':t.properties.distance,'totalenergi':totwhtext,'totalwaktu':Number(timmtext.toFixed(0))};
 }
     </script>
     </body>
