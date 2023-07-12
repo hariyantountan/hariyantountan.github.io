@@ -16,6 +16,12 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.css">
         <style type="text/css">
             #mapshow { position: fixed; height: 100%; width:100%; left: 0px; top:0px;}
+            .text-toogle[aria-expanded=false] .text-expanded {
+            display: none;
+            }
+            .text-toogle[aria-expanded=true] .text-collapsed {
+            display: none;
+            }
         </style>
   </head>
   <body>
@@ -27,7 +33,7 @@
                   <div class="card-header">
                     <h6 class="card-title"><i class="bi bi-map-fill mr-1"></i>
                     Titik Lokasi
-                        <button type="button" class="btn btn-sm btn-default float-end"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"><i class="bi bi-caret-down-square"></i></button>
+                        <button type="button" class="btn btn-sm btn-light float-end text-toogle"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"><i class="bi bi-caret-down text-collapsed"></i><i class="bi bi-caret-up text-expanded"></i></button>
                         </h6>
                   </div>
                   <div class="card-header">
@@ -40,7 +46,7 @@
                   <div class="card-body collapse show" id="collapseExample">
                     <div class="row">
                       <div class="col-md-12">
-                        <ul class="list-group mb-3" id="filterdialog" style="overflow-y: scroll;height:185px;">
+                        <ul class="pagination mb-2" id="filterdialog" style="overflow-x: scroll; overflow-y:hidden; height:135px;">
                         </ul>
                         <div class="card p-2">
                         <h6 class="d-flex justify-content-between align-items-center mb-3">
@@ -58,16 +64,19 @@
                   <div class="card-header">
                     <h6 class="card-title"><i class="bi bi-map-fill mr-1"></i>
                     Detail Rute
-                        <button type="button" class="btn btn-sm btn-default float-end"  data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><i class="bi bi-caret-down-square"></i></button>
+                        <button type="button" class="btn btn-sm btn-light float-end text-toogle"  data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><i class="bi bi-caret-down text-collapsed"></i><i class="bi bi-caret-up text-expanded"></i></button>
                   </div>
                   <div class="card-body collapse hide" id="collapseExample2">
                     <div class="row">
-                      <div class="col-md-12" style="overflow-y: scroll;height:300px;">
+                      <div class="col-md-12"">
+                        <div class="card p-2">
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-submitdata"><i class="bi bi-send-check"></i> Submit Data Anda</button>
+                        </div>
                         <h6 class="d-flex justify-content-between align-items-center mb-3">
                           <span class="text-primary">Informasi Rute</span>
                           <span class="badge bg-primary rounded-pill"></span>
                         </h6>
-                        <ul class="list-group mb-3" id="detaildialog">
+                        <ul class="list-group mb-3" id="detaildialog" style="overflow-y: scroll;height:250px;>
                           <div class="card p-2">
                             Detail informasi Rute Akan tampil setelah menentukan 2 atau lebih titik arah dan klik Tampilkan Rute
                           </div>
@@ -177,78 +186,78 @@
     <div class="card-body">
       <div class="mb-3">
         <label class="form-label">
-        Dalam skala 1-5 apakah aplikasi ini membantu anda untuk memperoleh informasi mengenai penggunaan energi kendaraan listrik?</label>
-        <div class="form-check form-check-inline">
+        Apakah aplikasi ini membantu anda untuk memperoleh informasi mengenai penggunaan energi kendaraan listrik?</label>
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q1" id="a1" value="1">
-          <label class="form-check-label" for="a1">1</label>
+          <label class="form-check-label" for="a1">Sangat Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q1" id="a2" value="2">
-          <label class="form-check-label" for="a2">2</label>
+          <label class="form-check-label" for="a2">Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q1" id="a3" value="3">
-          <label class="form-check-label" for="a3">3</label>
+          <label class="form-check-label" for="a3">Kurang Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q1" id="a4" value="4">
-          <label class="form-check-label" for="a4">4</label>
+          <label class="form-check-label" for="a4">Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q1" id="a5" value="5">
-          <label class="form-check-label" for="a5">5</label>
+          <label class="form-check-label" for="a5">Sangat Setuju</label>
         </div>
       </div>
 
 
       <div class="mb-3">
         <label class="form-label">
-        Dalam skala 1-5 apakah penggunaan energi yang ditampilkan pada aplikasi lebih ekonomis jika dibandingkan penggunaan anda sehari-hari?</label>
-        <div class="form-check form-check-inline">
+        Mudahkan penggunaan aplikasi ini?</label>
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q2" id="b1" value="1">
-          <label class="form-check-label" for="b1">1</label>
+          <label class="form-check-label" for="b1">Sangat Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q2" id="b2" value="2">
-          <label class="form-check-label" for="b2">2</label>
+          <label class="form-check-label" for="b2">Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q2" id="b3" value="3">
-          <label class="form-check-label" for="b3">3</label>
+          <label class="form-check-label" for="b3">Kurang Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q2" id="b4" value="4">
-          <label class="form-check-label" for="b4">4</label>
+          <label class="form-check-label" for="b4">Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q2" id="b5" value="5">
-          <label class="form-check-label" for="b5">5</label>
+          <label class="form-check-label" for="b5">Sangat Setuju</label>
         </div>
       </div>
 
 
       <div class="mb-3">
         <label class="form-label">
-        Dalam skala 1-5 apakah aplikasi memberikan informasi perjalanan transportasi yang anda lakukan secara tepat?</label>
-        <div class="form-check form-check-inline">
+        Apakah aplikasi memberikan informasi perjalanan transportasi yang anda lakukan secara tepat?</label>
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q3" id="c1" value="1">
-          <label class="form-check-label" for="c1">1</label>
+          <label class="form-check-label" for="c1">Sangat Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q3" id="c2" value="2">
-          <label class="form-check-label" for="c2">2</label>
+          <label class="form-check-label" for="c2">Tidak Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q3" id="c3" value="3">
-          <label class="form-check-label" for="c3">3</label>
+          <label class="form-check-label" for="c3">Kurang Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q3" id="c4" value="4">
-          <label class="form-check-label" for="c4">4</label>
+          <label class="form-check-label" for="c4">Setuju</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="form-check">
           <input class="form-check-input" type="radio" name="q3" id="c5" value="5">
-          <label class="form-check-label" for="c5">5</label>
+          <label class="form-check-label" for="c5">Sangat Setuju</label>
         </div>
       </div>
       <p class="login-box-msg">Terima kasih telah menggunakan aplikasi. Untuk kebutuhan penelitian kami, silahkan klik <button class="btn btn-primary" onclick="doSubmitData();">Submit Data</button></p><h6 class="text-center">Terima kasih atas partisipasinya.</h6>
@@ -304,7 +313,6 @@ mapshow.setBaseLayer(globarr[b]);
 }
 }
 
-
 window.addEventListener('DOMContentLoaded', event => {
   if(checkCompat()){
   let b=locStorr(),c=sesStorr();
@@ -315,6 +323,9 @@ window.addEventListener('DOMContentLoaded', event => {
 
   clearRuteExist();
   reqToGoogle()
+  globarr['arrdet']=[];
+  globarr['totval']=[];
+  globarr['geo']=[];
   //geetjsonrute();
 
   }
@@ -327,20 +338,24 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 function doSubmitData(){
-  if (confirm("Data anda akan dikirim, Klik OK untuk melanjutkan. Klik Cancel untuk membatalkan") == true) {
-    let b=locStorr(),c=sesStorr();
-    let ee=JSON.parse(b.listrute); 
-    let que = {'q1':$("input[name='q1']:checked").val(),'q2':$("input[name='q2']:checked").val(),'q3':$("input[name='q3']:checked").val()};
+  if (globarr['arrdet'].length<1) {
+      alert("Tentukan titik terlebih dahulu dan buat rute dengan klik Tampilkan Rute terlebih dahulu sebelum Submit Data ....");
+  }else{
+    if (confirm("Data anda akan dikirim, Klik OK untuk melanjutkan. Klik Cancel untuk membatalkan") == true) {
+      let b=locStorr(),c=sesStorr();
+      let ee=JSON.parse(b.listrute); 
+      let que = {'q1':$("input[name='q1']:checked").val(),'q2':$("input[name='q2']:checked").val(),'q3':$("input[name='q3']:checked").val()};
 
-    let topost = {'kuesioner':que,'detail':globarr['arrdet'],'koodinat':globarr['geo'],'variabel':ee,'total':globarr['totval']};
-    console.log(topost);
-    let vlast = JSON.stringify(topost);
-    urlLoader('POST',sublist,'json',vlast).
-    then(function(t){
-      $('#modal-submitdata').modal('hide');
-    })
-  } else {
-    
+      let topost = {'kuesioner':que,'detail':globarr['arrdet'],'koodinat':globarr['geo'],'variabel':ee,'total':globarr['totval']};
+      console.log(topost);
+      let vlast = JSON.stringify(topost);
+      urlLoader('POST',sublist,'json',vlast).
+      then(function(t){
+        $('#modal-submitdata').modal('hide');
+      })
+    } else {
+      
+    }
   }
 }
 function divSizeChange(w,h){
@@ -379,7 +394,7 @@ function ubahNilaiKoef(){
 }
 function clearRuteExist(){
   let b=locStorr(),c=sesStorr();
-  let r=[{"lat":'',"long":'','nm':'Klik pada peta dan tunggu hingga lokasi tertera disini...'},{"lat":'',"long":'','nm':'Klik pada peta dan tunggu hingga lokasi tertera disini...'}],s = JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.80,'heightfront':1.60});
+  let r=[{"lat":'',"long":'','nm':'-'},{"lat":'',"long":'','nm':'-'}],s = JSON.stringify({'rute':r,'avoid':'','mass':200,'roll':0.01,'g':9.81,'densitiy':1.23,'coefair':0.88,'adjustfront':0.70,'widthfront':0.80,'heightfront':1.60});
     localStorage.setItem('listrute',s);
     $('#nilmassa').val('200');
     $('#nilrolres').val('0.01');
@@ -405,37 +420,39 @@ function genListRuteField(){
 }
 function genTitikArah(i,ee){
   numbered=i+1;
+  let btncl='btn btn-light btn-outline-secondary btn-lg';
   globarr['marker'+i] = new maptalks.Marker().addTo(mapshow.getLayer('layertitikarahshow'));
-  globarr['marker'+i].updateSymbol({
-  'markerFile' : 'imerah.png',
-  'markerWidth' : 45,
-  'markerHeight' : 45,
-  'textName' : 'Titik '+numbered,
-  'textFill' : '#34495e',
-  'textSize' : 20,
-  'textWeight' : 900,
-  'textFaceName' : 'tahoma',
-  'textDy' : 20,
-  'markerDy':10
-  })
-  globarr['marker'+i].setCoordinates([ee[i].long,ee[i].lat]);
-  globarr['marker'+i].show();
-  //console.log('x loc'+a.coordinate.x)
-  let aa=$('<li />').attr({'class':'list-group-item d-flex justify-content-between lh-sm'}),
-  aaa=$('<div />').attr({"style":"width:100%;"}),
-  ab=$('<span />').attr({'class':'btn'}).html('<i class="bi bi-pin-angle-fill"></i><br />'+numbered),
-  ac=$('<h6 />').attr({'class':'my-0','id':'lokasitext'+i}).html(ee[i].nm),
-  ad=$('<small />').attr({'class':'text-body-secondary'}).html(' '),
-  aee=$('<div />').attr({'class':'input-group input-group-sm mb-3'}),
-  //ae=$('<span />').attr({'class':'btn btn-primary btn-sm'}).html('<i class="bi bi-arrow-up-circle"></i> Naik'),
-  //af=$('<span />').attr({'class':'btn btn-primary btn-sm'}).html('<i class="bi bi-arrow-down-circle"></i> Turun'),
-  ag=$('<span />').attr({'class':'btn btn-danger btn-sm float-end'}).html('<i class="bi bi-dash-circle-fill"></i> Hapus').on('click',function(){hapusFieldRute(i)}),
-  ah=$('<span />').attr({'class':'btn btn-primary btn-sm float-end'}).html('<i class="bi bi-eraser-fill"></i> Clear').on('click',function(){clearFieldRute(i)});
-  ad.append([ag,ah]);
-  aaa.append([ac,ad]);
-  aa.append([ab,aaa]);
-
-  $('#filterdialog').prepend(aa);
+  if(ee[i].long==""){
+    //
+  }else{
+    let btncl='btn btn-light btn-outline-primary btn-lg';
+    globarr['marker'+i].updateSymbol({
+    'markerFile' : 'imerah.png',
+    'markerWidth' : 45,
+    'markerHeight' : 45,
+    'textName' : 'Titik '+numbered,
+    'textFill' : '#34495e',
+    'textSize' : 20,
+    'textWeight' : 900,
+    'textFaceName' : 'tahoma',
+    'textDy' : 20,
+    'markerDy':10
+    })
+    globarr['marker'+i].setCoordinates([ee[i].long,ee[i].lat]);
+    globarr['marker'+i].show();
+    globarr['marker'+i].setInfoWindow({
+      'title'     : '<i class="bi bi-pin-angle-fill"></i> Titik '+numbered,
+      'content'   : '<h6>'+ee[i].nm+'</h6><span onclick="clearFieldRute('+i+')" class="btn btn-primary btn-sm"><i class="bi bi-eraser-fill"></i> Clear</span>'
+    });
+    //console.log('x loc'+a.coordinate.x)
+  }
+    let aa=$('<li />').attr({'class':'page-item','style':'min-width: 180px;'}),
+    ap=$('<p />').attr({'class':btncl,'id':'pee'+i}).html('<small><i class="bi bi-pin-angle-fill"></i> Titik</small><br />'+numbered+'<br />'),
+    sc=$('<span />').attr({'class':'btn btn-primary btn-sm'}).html('<i class="bi bi-eraser-fill"></i> Clear').on('click',function(){clearFieldRute(i)}),
+    sh=$('<span />').attr({'class':'btn btn-danger btn-sm'}).html('<i class="bi bi-dash-circle-fill"></i> Hapus').on('click',function(){hapusFieldRute(i)});
+    ap.append([sc,sh]);
+    aa.append([ap]);
+    $('#filterdialog').prepend(aa);
 }
 function tambahTitikArah(){
   let b=locStorr(),c=sesStorr();
@@ -484,11 +501,11 @@ function hapusFieldRute(a){
 function clearFieldRute(a){
   let b=locStorr(),c=sesStorr();
   let ee=JSON.parse(b.listrute);
-  $('#lokasitext'+a).html('Klik pada peta dan tunggu hingga lokasi tertera disini...');
+  $('#pee'+a).attr({'class':'btn btn-light btn-outline-secondary btn-lg'}).off('click');
 
   ee.rute[a].lat='';
   ee.rute[a].long='';
-  ee.rute[a].nm='-<br />-';
+  ee.rute[a].nm='-';
   let ns = JSON.stringify(ee);
   localStorage.setItem('listrute',ns);
   globarr['marker'+a].hide();
@@ -538,16 +555,26 @@ function doMapShowClick(a,i){
     //$('#titik'+i).attr({'value':a.coordinate.x+','+a.coordinate.y});
     urlLoader('GET','https://api.geoapify.com/v1/geocode/reverse?lat='+a.coordinate.y+'&lon='+a.coordinate.x+'&apiKey='+apii,'json','').
     then(function(t){
-        $('#lokasitext'+i).html(t.features[0].properties.formatted);
+        
           ee.rute[i].lat=a.coordinate.y;
           ee.rute[i].long=a.coordinate.x;
           ee.rute[i].nm=t.features[0].properties.formatted;
           let ns = JSON.stringify(ee);
           localStorage.setItem('listrute',ns);
           globarr['marker'+i].setCoordinates([a.coordinate.x,a.coordinate.y]);
+          globarr['marker'+i].setInfoWindow({
+            'title'     : '<i class="bi bi-pin-angle-fill"></i> Titik '+noi,
+            'content'   : '<h6>'+t.features[0].properties.formatted+'</h6><span onclick="clearFieldRute('+i+')" class="btn btn-primary btn-sm"><i class="bi bi-eraser-fill"></i> Clear</span>'
+          });
           globarr['marker'+i].show();
+          globarr['marker'+i].openInfoWindow();
+          $('#pee'+i).attr({'class':'btn btn-light btn-outline-primary btn-lg'}).on('click', function(a){
+            globarr['marker'+i].openInfoWindow();//.off('click');
+          });
       //console.log(t.features[0].properties.datasource.formatted)
       //console.log(t.features[0].properties.formatted)
+
+
     }).then(function(){
       urlLoader('GET',apiilist+'?justget='+apii,'json','').
       then(function(){
@@ -580,9 +607,10 @@ function geetjsonrute(){
               $('#detaildialog').html('<li>Mohon maaf, Sepertinya Rute Tidak Ditemukan</li>');
             }
             $('#collapseExample2').collapse('show');
+            $('#collapseExample').collapse('hide');
           urlLoader('GET',apiilist+'?justget='+apii,'json','').
           then(function(s){
-            $('#modal-submitdata').modal('show');
+            //$('#modal-submitdata').modal('show');
           })
         })
         .then(function(){
